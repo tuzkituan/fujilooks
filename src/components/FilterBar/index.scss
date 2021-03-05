@@ -1,0 +1,27 @@
+.container {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    // border-top: 1px solid rgba(255, 0, 0, 0.39);
+    // border-bottom: 1px solid rgba(255, 0, 0, 0.39);
+}
+.leftPart {
+    display: flex;
+    flex-direction: row;
+}
+
+.fontStyle {
+    color: rgb(59, 59, 59);
+    font-weight: bold;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+.title {
+    margin-right: 10px;
+    @extend .fontStyle
+}
+.rightPart {
+    color: white;
+    @extend .fontStyle
+}
