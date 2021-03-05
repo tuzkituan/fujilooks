@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 
 import styles from './index.scss';
 
@@ -9,6 +9,11 @@ export default class MainLayout extends Component {
         this.state = {
         }
     }
+
+componentDidMount() {
+  StatusBar.setBarStyle( 'light-content',true)
+  StatusBar.setBackgroundColor("#000")
+}
 
     render() {
         const { children, title ='' } = this.props;

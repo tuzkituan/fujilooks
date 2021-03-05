@@ -14,8 +14,6 @@ export default class PresetDetail extends Component {
         const { params: { id = 0 } = {} } = route;
         return (
             <View className={styles.Settings}>
-                <Text>Preset Detail Screen</Text>
-                <Text>Selected ID: {id}</Text>
                 <Image source={Image1} style={styles.previewImage} />
                 <Image source={Image2} style={styles.previewImage} />
                 <Image source={Image3} style={styles.previewImage} />
