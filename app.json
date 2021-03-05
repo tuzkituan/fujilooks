@@ -1,0 +1,12 @@
+{
+  "name": "fuji-looks",
+  "displayName": "fuji-looks",
+  "expo": {
+    "name": "fuji-looks",
+    "slug": "fuji-looks",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
