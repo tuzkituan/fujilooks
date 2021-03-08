@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native';
-import { color } from 'react-native-reanimated';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import styles from './index.scss';
 
 export default class FilterBar extends Component {
@@ -27,10 +28,12 @@ export default class FilterBar extends Component {
             }]}>
                 <View style={styles.container}>
                     <View style={styles.leftPart}>
-                        <Text onPress={() => this.setActive(1)} style={[styles.title, isActive === 1 ? { color: "red" } : {}]}>FILTER</Text>
-                        <Text onPress={() => this.setActive(2)} style={[styles.title, isActive === 2 ? { color: "red" } : {}]}>ALL</Text>
+                        <Text onPress={() => this.setActive(1)} style={[styles.title, isActive === 1 ? { color: "teal" } : {}]}>FILTER</Text>
+                        <Text onPress={() => this.setActive(2)} style={[styles.title, isActive === 2 ? { color: "teal" } : {}]}>ALL</Text>
                     </View>
-                    <Text style={styles.rightPart}>SEARCH</Text>
+                    <View style={styles.rightPart}>
+                    <MaterialIcons name="search" color="#fff" size={14} />
+                    </View>
                 </View>
             </View>
         )

@@ -10,13 +10,13 @@ export default class MainLayout extends Component {
         }
     }
 
-componentDidMount() {
-  StatusBar.setBarStyle( 'light-content',true)
-  StatusBar.setBackgroundColor("#000")
-}
+    componentDidMount() {
+        StatusBar.setBarStyle('light-content', true)
+        StatusBar.setBackgroundColor("#000")
+    }
 
     render() {
-        const { children, title ='' } = this.props;
+        const { children, title = '' } = this.props;
         return (
             <View style={styles.MainLayout}>
                 {/* <FloatingNavigator /> */}
