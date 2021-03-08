@@ -2,11 +2,11 @@
 import { combineReducers } from 'redux';
 
 // Imports: Reducers
-import counterReducer from './counterReducer';
+import loginReducer from './loginReducer';
 
 // Redux: Root Reducer
 const rootReducer = combineReducers({
-  counterReducer: counterReducer,
+  loginReducer,
 });
 
 // Exports

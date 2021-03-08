@@ -21,4 +21,6 @@ target 'fujilooks' do
   #  post_install do |installer|
   #    flipper_post_install(installer)
   #  end
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
 end
