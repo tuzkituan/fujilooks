@@ -6,7 +6,7 @@ import counterReducer from './counterReducer';
 
 // Redux: Root Reducer
 const rootReducer = combineReducers({
-  counter: counterReducer,
+  counterReducer: counterReducer,
 });
 
 // Exports

@@ -41,7 +41,7 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="Settings"
+            name="User Settings"
             component={SettingsPage}
             options={{
               tabBarIcon: ({ color, size }) => (
