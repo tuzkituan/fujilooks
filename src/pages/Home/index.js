@@ -21,13 +21,13 @@ export default class Home extends Component {
         const { navigation } = this.props;
         const { name = '', id = 0, img = '' } = item;
         return (
-            <TouchableOpacity key={id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { id, name })}>
-                <View style={styles.eachRow}>
+            <View style={styles.eachRow}>
+                <TouchableOpacity key={id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { id, name })}>
                     {/* <Text style={styles.indexNumber}>{index}</Text> */}
                     <Image source={img} style={styles.previewImage} />
                     <Text style={styles.presetName}>{name}</Text>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         )
     }
 

@@ -18,19 +18,20 @@
     // margin-bottom: 60px;
 }
 .presetView {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 15px 10px;
     // background-color: rgb(89, 184, 228);
     // margin: 2px 0;
     // border-radius: 2px;
+}
+.eachRow {
     border-bottom-width: 1px;
     border-bottom-color: rgb(43, 43, 43);
     border-top-width: 1px;
     border-top-color: #000;
-}
-.eachRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+   
 }
 .previewImage {
     max-width: 30px;

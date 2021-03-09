@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, TouchableHighlight, View, Image } from 'react-native';
 import MainLayout from '../../layouts/MainLayout';
 import { connect } from 'react-redux';
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
 import styles from './index.scss';
-import { watchSaveGoogleUser } from '../../sagas/loginSaga';
+
 class Settings extends Component {
     componentDidMount
     componentDidMount = () => {
@@ -26,7 +26,6 @@ class Settings extends Component {
             // this.setState({ userInfo: userInfo, loggedIn: true });
 
             const { saveGoogleUser = () => { } } = this.props;
-            // console.log('userInfo',userInfo);
             saveGoogleUser(userInfo);
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -40,26 +39,58 @@ class Settings extends Component {
             }
         }
     };
+
+    _signOut = async () => {
+        const { saveGoogleUser = () => { } } = this.props;
+        
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          await saveGoogleUser({});
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+    renderLoginBtn = () => {
+        const { loginWithGoogle = () => { } } = this.props;
+
+        return (
+            <TouchableHighlight onPress={loginWithGoogle}>
+                <GoogleSigninButton
+                    style={{ width: 192, height: 48 }}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this._signIn} />
+            </TouchableHighlight>
+        )
+    }
     renderScreen = () => {
-        const { loginWithGoogle = () => { }, currentUser = {} } = this.props;
+        const { currentUser = {} } = this.props;
+        const { user = {} } = currentUser;
+        const { id = '', name = '', photo = '', email = '' } = user;
         return (
             <View>
-                <TouchableHighlight onPress={loginWithGoogle}>
-                    <GoogleSigninButton
-                        style={{ width: 192, height: 48 }}
-                        size={GoogleSigninButton.Size.Wide}
-                        color={GoogleSigninButton.Color.Dark}
-                        onPress={this._signIn} />
-                </TouchableHighlight>
-                <Text style={{ color: '#fff' }}>
-                    {currentUser.idToken}
-                </Text>
+                {!id ? this.renderLoginBtn() :
+                    <View>
+                        <View style={styles.information}>
+                            <Image style={styles.userImage} source={{ uri: photo }} />
+                            <Text style={styles.nameText}>
+                                {name}
+                            </Text>
+                            <Text style={styles.emailText}>
+                                {email}
+                            </Text>
+                            <TouchableHighlight onPress={this._signOut}>
+                                <Text style={styles.logoutBtn}>Logout</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                }
             </View>
         )
     }
     render() {
-        const { currentUser = {} } = this.props;
-        // console.log('currentUser',currentUser);
         return (
             <MainLayout children={this.renderScreen()} title="SETTINGS" />
         )
@@ -75,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         saveGoogleUser: (currentUser) => dispatch({
             type: 'SAVE_GOOGLE_USER',
-            currentUser
+            payload: { currentUser }
         }),
     };
 };

@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects';
  
-function* saveGoogleUser(payload) {
+function* saveGoogleUser(action) {
     try {
       yield put({ 
         type: 'SAVE_GOOGLE_USER_ASYNC',
-        currentUser: payload.currentUser 
+        currentUser: action.payload.currentUser 
       });
     }
     catch (error) {
