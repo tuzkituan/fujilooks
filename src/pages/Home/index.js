@@ -23,9 +23,13 @@ export default class Home extends Component {
         return (
             <View style={styles.eachRow}>
                 <TouchableOpacity key={id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { id, name })}>
-                    {/* <Text style={styles.indexNumber}>{index}</Text> */}
-                    <Image source={img} style={styles.previewImage} />
-                    <Text style={styles.presetName}>{name}</Text>
+                    <View style={styles.leftPart}>
+                        <Text style={styles.indexNumber}>{index}</Text>
+                        <Text style={styles.presetName}>{name}</Text>
+                    </View>
+                    {/* <View style={styles.rightPart}> */}
+                        <Image source={img} style={styles.previewImage} />
+                    {/* </View> */}
                 </TouchableOpacity>
             </View>
         )
@@ -100,13 +104,13 @@ export default class Home extends Component {
                 <FlatList
                     data={mockData}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.id.toString()}
                     style={styles.presetList}
                 />
             </View>
         )
     }
     render() {
-        return (<MainLayout title="FUJIFILM PRESETS" children={this.renderPage()} />)
+        return (<MainLayout title="FUJI LOOKS" children={this.renderPage()} />)
     }
 }

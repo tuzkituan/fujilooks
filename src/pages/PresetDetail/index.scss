@@ -1,19 +1,31 @@
 .PresetDetail {
-    background-color: red;
     margin-bottom: 10px;
 }
 
+.partTitle {
+    color: teal;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-family: 'Montserrat-Medium';
+    margin-bottom: 15px;
+}
+
+.sliderBox {
+    margin-bottom: 20px;
+}
 // RECIPES
-.detailRow {
-    margin-top: 20px;
+.detailRows {
+    // margin-top: 20px;
+    margin-bottom: 40px;
 }
 .eachRow {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom-width: 1px;
-    border-bottom-color: rgb(49, 49, 49);
+    border-top-width: 1px;
+    border-top-color: rgb(49, 49, 49);
     padding: 15px 0;
 }
 

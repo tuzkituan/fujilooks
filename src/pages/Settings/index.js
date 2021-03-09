@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Text, TouchableHighlight, View, Image } from 'react-native';
-import MainLayout from '../../layouts/MainLayout';
+import { Text, TouchableHighlight, View, Image, ScrollView } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux';
 
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 
 import styles from './index.scss';
 
@@ -53,16 +53,19 @@ class Settings extends Component {
     };
 
     renderLoginBtn = () => {
-        const { loginWithGoogle = () => { } } = this.props;
-
         return (
-            <TouchableHighlight onPress={loginWithGoogle}>
-                <GoogleSigninButton
-                    style={{ width: 192, height: 48 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
-                    onPress={this._signIn} />
-            </TouchableHighlight>
+            <View>
+                <Text style={styles.loginStatusText}>
+                    You are not signed in
+                </Text>
+                <View style={styles.signInBtn}>
+                    <TouchableHighlight onPress={this._signIn}>
+                        <Text style={styles.signInText}>
+                            SIGN IN WITH GOOGLE
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
         )
     }
     renderScreen = () => {
@@ -70,33 +73,74 @@ class Settings extends Component {
         const { user = {} } = currentUser;
         const { id = '', name = '', photo = '', email = '' } = user;
         return (
-            <View style={styles.Settings}>
-                {!id ? this.renderLoginBtn() :
-                    <View>
-                        <View style={styles.information}>
-                            <Image style={styles.userImage} source={{ uri: photo }} />
-                            <Text style={styles.nameText}>
-                                {name}
-                            </Text>
-                            <Text style={styles.emailText}>
-                                {email}
-                            </Text>
-                            <TouchableHighlight onPress={this._signOut}>
-                                <Text style={styles.logoutBtn}>Logout</Text>
-                            </TouchableHighlight>
+            <ScrollView style={styles.Settings}>
+                <View>
+                    {!id ? this.renderLoginBtn() :
+                        <View>
+                            <View style={styles.information}>
+                                <Image style={styles.userImage} source={{ uri: photo }} />
+                                <Text style={styles.nameText}>
+                                    {name}
+                                </Text>
+                                <Text style={styles.emailText}>
+                                    {email}
+                                </Text>
+                                <TouchableHighlight onPress={this._signOut}>
+                                    <Text style={styles.logoutBtn}>Logout</Text>
+                                </TouchableHighlight>
+                            </View>
                         </View>
+                    }
+                    <View style={styles.menu}>
+                        <TouchableHighlight style={styles.eachMenuItem} onPress={() => { }}>
+                            <View style={styles.eachRow}>
+                                <View style={styles.leftPart}>
+                                    <Text style={styles.labelClickable}>Favorites</Text>
+                                </View>
+                                <View style={styles.rightPart}>
+                                    <MaterialIcons style={styles.arrowIcon} name='arrow-forward-ios' />
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        {id !== '' && <TouchableHighlight style={styles.eachMenuItem} onPress={() => { }}>
+                            <View style={styles.eachRow}>
+                                <View style={styles.leftPart}>
+                                    <Text style={styles.labelClickable}>Your uploaded presets</Text>
+                                </View>
+                                <View style={styles.rightPart}>
+                                    <MaterialIcons style={styles.arrowIcon} name='arrow-forward-ios' />
+                                </View>
+                            </View>
+                        </TouchableHighlight>}
+                        <View style={styles.spacer}></View>
+                        <TouchableHighlight style={styles.eachMenuItem} onPress={() => { }}>
+                            <View style={styles.eachRow}>
+                                <View style={styles.leftPart}>
+                                    <Text style={styles.labelClickable}>Donate me</Text>
+                                </View>
+                                <View style={styles.rightPart}>
+                                    <MaterialIcons style={styles.arrowIcon} name='arrow-forward-ios' />
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={styles.eachMenuItem} onPress={() => { }}>
+                            <View style={styles.eachRow}>
+                                <View style={styles.leftPart}>
+                                    <Text style={styles.label}>Developer</Text>
+                                </View>
+                                <View style={styles.rightPart}>
+                                    <Text style={styles.value}>Lewis Nguyen</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
                     </View>
-                }
-                <View style={styles.aboutInfo}>
-                    <Text style={styles.describeText}>This app is developed by</Text>
-                    <Text style={styles.author}>Nguyen Ngoc Tuan (Lewis Nguyen)</Text>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
     render() {
         return (
-            <MainLayout children={this.renderScreen()} title="SETTINGS" />
+            <>{this.renderScreen()}</>
         )
     }
 }

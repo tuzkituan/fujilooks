@@ -142,7 +142,7 @@ export default class PresetDetail extends Component {
                     <View style={styles.arrayValue}>
                         {mockData.sensors.map((sensor, index) =>
                             <Text key={index} style={styles.value}>{sensor}
-                        </Text>)}
+                            </Text>)}
                     </View>
                 </View>
                 <View style={styles.eachRow}>
@@ -152,7 +152,7 @@ export default class PresetDetail extends Component {
                     <View style={styles.arrayValue}>
                         {mockData.cameras.map((camera, index) =>
                             <Text key={index} style={styles.value}>{camera}
-                        </Text>)}
+                            </Text>)}
                     </View>
                 </View>
             </View>
@@ -163,9 +163,19 @@ export default class PresetDetail extends Component {
         const { route } = this.props;
         const { params: { id = 0 } = {} } = route;
         const windowWidth = Dimensions.get('window').width;
+        const windowHeight = Dimensions.get('window').height;
         return (
             <ScrollView className={styles.PresetDetail}>
-                <SliderBox images={[Image1, Image2, Image3]} sliderBoxHeight={200} parentWidth={windowWidth - 40} />
+                <Text style={styles.partTitle}>SAMPLE IMAGES</Text>
+                <View style={styles.sliderBox}>
+                    <SliderBox
+                        ImageComponentStyle={{ borderRadius: 5, width: '97%', marginTop: 5 }}
+                        autoplay images={[Image1, Image2, Image3]}
+                        sliderBoxHeight={windowHeight * 0.35}
+                        parentWidth={windowWidth - 40}
+                    />
+                </View>
+                <Text style={styles.partTitle}>RECIPES</Text>
                 {this.renderInfomation()}
             </ScrollView>
         )
