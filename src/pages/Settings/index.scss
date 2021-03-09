@@ -1,5 +1,9 @@
 .Settings {
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 85%;
 }
 .information {
     display: flex;
@@ -14,21 +18,48 @@
 }
 
 .nameText {
-    font-weight: bold;
     color: white;
     margin-top: 10px;
     font-size: 16px;
+    font-family: 'Montserrat-SemiBold';
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 .emailText {
     color: rgb(126, 126, 126);
     font-size: 12px;
     margin-top: 10px;
+    font-family: 'Montserrat-Medium';
+    
 }
 .logoutBtn {
-    margin-top: 10px;
+    margin-top: 20px;
     color: #fff;
     border-radius: 20px;
     border-color: teal;
     border-width: 1px;
     padding: 2px 20px;
+    font-family: 'Montserrat-Bold';
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.aboutInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.describeText {
+    color: #fff;
+    font-size: 10px;
+    font-family: 'Montserrat-Thin';
+}
+.author {
+    margin-top: 5px;
+    color: #fff;
+    font-size: 10px;
+    font-family: 'Montserrat-Medium';
 }

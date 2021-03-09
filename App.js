@@ -23,7 +23,7 @@ export default function App() {
             headerShown: false,
           }}
           tabBarOptions={{
-            // showLabel: false,
+            showLabel: false,
             showIcon: true,
             activeBackgroundColor: '#000',
             inactiveBackgroundColor: '#000',

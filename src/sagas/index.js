@@ -2,11 +2,11 @@
 import { all, fork } from 'redux-saga/effects';
 
 // Imports: Redux Sagas
-import { watchSaveGoogleUser } from './loginSaga';
+import { watchsaveLoginUser } from './loginSaga';
 
 // Redux Saga: Root Saga
 export function* rootSaga () {
   yield all([
-    fork(watchSaveGoogleUser),
+    fork(watchsaveLoginUser),
   ]);
 };

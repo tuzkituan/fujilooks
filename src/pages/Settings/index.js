@@ -25,8 +25,8 @@ class Settings extends Component {
             const userInfo = await GoogleSignin.signIn();
             // this.setState({ userInfo: userInfo, loggedIn: true });
 
-            const { saveGoogleUser = () => { } } = this.props;
-            saveGoogleUser(userInfo);
+            const { saveLoginUser = () => { } } = this.props;
+            saveLoginUser(userInfo);
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -41,16 +41,16 @@ class Settings extends Component {
     };
 
     _signOut = async () => {
-        const { saveGoogleUser = () => { } } = this.props;
-        
+        const { saveLoginUser = () => { } } = this.props;
+
         try {
-          await GoogleSignin.revokeAccess();
-          await GoogleSignin.signOut();
-          await saveGoogleUser({});
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            await saveLoginUser({});
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     renderLoginBtn = () => {
         const { loginWithGoogle = () => { } } = this.props;
@@ -70,7 +70,7 @@ class Settings extends Component {
         const { user = {} } = currentUser;
         const { id = '', name = '', photo = '', email = '' } = user;
         return (
-            <View>
+            <View style={styles.Settings}>
                 {!id ? this.renderLoginBtn() :
                     <View>
                         <View style={styles.information}>
@@ -87,6 +87,10 @@ class Settings extends Component {
                         </View>
                     </View>
                 }
+                <View style={styles.aboutInfo}>
+                    <Text style={styles.describeText}>This app is developed by</Text>
+                    <Text style={styles.author}>Nguyen Ngoc Tuan (Lewis Nguyen)</Text>
+                </View>
             </View>
         )
     }
@@ -104,7 +108,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveGoogleUser: (currentUser) => dispatch({
+        saveLoginUser: (currentUser) => dispatch({
             type: 'SAVE_GOOGLE_USER',
             payload: { currentUser }
         }),
