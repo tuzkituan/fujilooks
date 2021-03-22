@@ -8,7 +8,6 @@ import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import styles from './index.scss';
 
 class Settings extends Component {
-    componentDidMount
     componentDidMount = () => {
         GoogleSignin.configure({
             scopes: ['https://www.googleapis.com/auth/drive.readonly'], webClientId: '223513467650-h2lcdo909cu7eg2fcjdarql4pc9s4n27.apps.googleusercontent.com',
@@ -75,22 +74,24 @@ class Settings extends Component {
         return (
             <ScrollView style={styles.Settings}>
                 <View>
-                    {!id ? this.renderLoginBtn() :
-                        <View>
-                            <View style={styles.information}>
-                                <Image style={styles.userImage} source={{ uri: photo }} />
-                                <Text style={styles.nameText}>
-                                    {name}
-                                </Text>
-                                <Text style={styles.emailText}>
-                                    {email}
-                                </Text>
-                                <TouchableHighlight onPress={this._signOut}>
-                                    <Text style={styles.logoutBtn}>Logout</Text>
-                                </TouchableHighlight>
+                    <View style={styles.userContainer}>
+                        {!id ? this.renderLoginBtn() :
+                            <View>
+                                <View style={styles.information}>
+                                    <Image style={styles.userImage} source={{ uri: photo }} />
+                                    <Text style={styles.nameText}>
+                                        {name}
+                                    </Text>
+                                    <Text style={styles.emailText}>
+                                        {email}
+                                    </Text>
+                                    <TouchableHighlight onPress={this._signOut}>
+                                        <Text style={styles.logoutBtn}>Logout</Text>
+                                    </TouchableHighlight>
+                                </View>
                             </View>
-                        </View>
-                    }
+                        }
+                    </View>
                     <View style={styles.menu}>
                         <TouchableHighlight style={styles.eachMenuItem} onPress={() => { }}>
                             <View style={styles.eachRow}>

@@ -8,13 +8,20 @@ import Image1 from '../../assets/1.jpg';
 import Image2 from '../../assets/2.jpg';
 import Image3 from '../../assets/3.jpg';
 
+import { connect } from 'react-redux';
+
 import styles from './index.scss';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
         }
+    }
+
+    componentDidMount = () => {
+        const { fetchRecipeList = () => { } } = this.props;
+        fetchRecipeList();
     }
 
     renderItem = ({ index, item }) => {
@@ -28,7 +35,7 @@ export default class Home extends Component {
                         <Text style={styles.presetName}>{name}</Text>
                     </View>
                     {/* <View style={styles.rightPart}> */}
-                        <Image source={img} style={styles.previewImage} />
+                    <Image source={img} style={styles.previewImage} />
                     {/* </View> */}
                 </TouchableOpacity>
             </View>
@@ -36,6 +43,9 @@ export default class Home extends Component {
     }
 
     renderPage = () => {
+        const { recipeList = [] } = this.props;
+
+        console.log('recipeList', recipeList);
         const mockData = [
             {
                 id: 1,
@@ -114,3 +124,19 @@ export default class Home extends Component {
         return (<MainLayout title="FUJI LOOKS" children={this.renderPage()} />)
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        recipeList: state.recipeReducer.recipeList
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchRecipeList: () => dispatch({
+            type: 'FETCH_RECIPES_LIST',
+        }),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
