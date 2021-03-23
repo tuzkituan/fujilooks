@@ -32,10 +32,8 @@ export function* watchFetchRecipeList() {
   }
 
   function* fetchRecipeDetail(action) {
-    console.log('_id',action.payload._id );
     try {
       const response = yield call(fetchRecipeDetailFn, { id: action.payload._id });
-      console.log('response',response);
       yield put({ 
         type: 'FETCH_RECIPE_DETAIL_ASYNC',
         recipeDetail: response?.recipe || {}
@@ -46,8 +44,19 @@ export function* watchFetchRecipeList() {
     }
 }
 
-
 export function* watchFetchRecipeDetail() {
   // Take Last Action
   yield takeLatest('FETCH_RECIPE_DETAIL', fetchRecipeDetail);
+}
+
+// CLEAR RECIPE DETAIL
+function* clearRecipeDetail(action) {
+  yield put({ 
+    type: 'CLEAR_RECIPE_DETAIL_ASYNC',
+  });
+}
+
+export function* watchClearRecipeDetail() {
+  // Take Last Action
+  yield takeLatest('CLEAR_RECIPE_DETAIL', clearRecipeDetail);
 }

@@ -36,8 +36,13 @@ class Home extends Component {
             });
     }
 
-    componentDidMount = () => {
-        this.fetchDataAPI()
+    async componentDidMount() {
+        const { clearRecipeDetail = () => { } } = this.props;
+      
+        this.props.navigation.addListener('focus', () => {
+            this.fetchDataAPI()
+            clearRecipeDetail()
+        });
     }
 
     renderItem = ({ index, item }) => {
@@ -103,6 +108,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchRecipeList: () => dispatch({
             type: 'FETCH_RECIPES_LIST',
+        }),
+        clearRecipeDetail: () => dispatch({
+            type: 'CLEAR_RECIPE_DETAIL',
         }),
     };
 };

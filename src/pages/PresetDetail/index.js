@@ -24,36 +24,36 @@ class PresetDetail extends Component {
         fetchRecipeDetail(_id);
     }
 
-    componentDidMount = () => {
-        this.fetchRecipeDetailAPI()
+    async componentDidMount() {
+        this.props.navigation.addListener('focus', () => {
+            this.fetchRecipeDetailAPI()
+        });
     }
 
     renderInfomation = () => {
-        const mockData = {
-            filmSimulation: 'PRO Neg. Std',
-            dynamicRange: 'DR200',
-            highlight: '+1',
-            shadow: '+2',
-            color: '+4',
-            noiseReduction: '-3',
-            sharpening: '+1',
-            grain: 'Strong',
-            colorChromeEffect: 'Weak',
+        const { recipeDetail = {} } = this.props;
+        const {
+            filmSimulation,
+            dynamicRange,
+            highlight,
+            shadow,
+            color,
+            noiseReduction,
+            sharpening,
+            grain,
+            colorChromeEffect,
             wb: {
-                temp: 'Auto',
-                red: '-1',
-                green: '0',
-                blue: '+4'
-            },
-            iso: 'up to ISO 6400',
-            exposure: '-1 to +2/3',
-            sensors: [
-                'X-Trans IV'
-            ],
-            cameras: [
-                'X-T3', 'X-T30'
-            ]
-        }
+                temp = '',
+                red = '',
+                green = '',
+                blue = ''
+            } = {},
+            iso,
+            exposure,
+            sensors = [],
+            cameras =[]
+        } = recipeDetail;
+
         return (
             <View style={styles.detailRows}>
                 <View style={styles.eachRow}>
@@ -61,7 +61,7 @@ class PresetDetail extends Component {
                         Film Simulation
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.filmSimulation}
+                        {filmSimulation}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -69,7 +69,7 @@ class PresetDetail extends Component {
                         Dynamic Range
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.dynamicRange}
+                        {dynamicRange}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -77,7 +77,7 @@ class PresetDetail extends Component {
                         Hightlight
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.highlight}
+                        {highlight}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -85,7 +85,7 @@ class PresetDetail extends Component {
                         Shadow
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.shadow}
+                        {shadow}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -93,7 +93,7 @@ class PresetDetail extends Component {
                         Color
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.color}
+                        {color}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -101,7 +101,7 @@ class PresetDetail extends Component {
                         Noise Reduction
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.noiseReduction}
+                        {noiseReduction}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -109,7 +109,7 @@ class PresetDetail extends Component {
                         Sharpening
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.sharpening}
+                        {sharpening}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -117,7 +117,7 @@ class PresetDetail extends Component {
                         Grain Effect
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.grain}
+                        {grain}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -125,7 +125,7 @@ class PresetDetail extends Component {
                         Color Chrome Effect
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.colorChromeEffect}
+                        {colorChromeEffect}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -133,7 +133,7 @@ class PresetDetail extends Component {
                         WB
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.wb.temp}, {mockData.wb.red} Red, {mockData.wb.green} Green and {mockData.wb.blue} Blue
+                        {temp}, {red} Red, {green} Green and {blue} Blue
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -141,7 +141,7 @@ class PresetDetail extends Component {
                         ISO
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.iso}
+                        {iso}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -149,7 +149,7 @@ class PresetDetail extends Component {
                         Exposure Compensation
                     </Text>
                     <Text style={styles.value}>
-                        {mockData.exposure}
+                        {exposure}
                     </Text>
                 </View>
                 <View style={styles.eachRow}>
@@ -157,7 +157,7 @@ class PresetDetail extends Component {
                         Sensors
                     </Text>
                     <View style={styles.arrayValue}>
-                        {mockData.sensors.map((sensor, index) =>
+                        {sensors.map((sensor, index) =>
                             <Text key={index} style={styles.value}>{sensor}
                             </Text>)}
                     </View>
@@ -167,7 +167,7 @@ class PresetDetail extends Component {
                         Cameras
                     </Text>
                     <View style={styles.arrayValue}>
-                        {mockData.cameras.map((camera, index) =>
+                        {cameras.map((camera, index) =>
                             <Text key={index} style={styles.value}>{camera}
                             </Text>)}
                     </View>
@@ -213,7 +213,7 @@ const mapDispatchToProps = (dispatch) => {
             payload: {
                 _id
             }
-        }),
+        })
     };
 };
 

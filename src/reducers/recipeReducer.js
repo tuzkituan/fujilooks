@@ -18,6 +18,12 @@ const recipeReducer = (state = initialState, action) => {
                 recipeDetail: action.recipeDetail,
             };
         }
+        case 'CLEAR_RECIPE_DETAIL_ASYNC': {
+            return {
+                ...state,
+                recipeDetail: {},
+            };
+        }
         default: {
             return state;
         }
