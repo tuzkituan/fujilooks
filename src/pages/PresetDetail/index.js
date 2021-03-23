@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Dimensions, ScrollView } from 'react-native';
+import { Text, View, Image, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { SliderBox } from "react-native-image-slider-box";
 
 import MainLayout from '../../layouts/MainLayout';
@@ -14,18 +14,22 @@ import styles from './index.scss';
 class PresetDetail extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            refreshing: false
+        }
     }
 
-    fetchRecipeDetailAPI = () => {
+    fetchRecipeDetailAPI = async () => {
         const { route } = this.props;
         const { params: { _id = '' } = {} } = route;
         const { fetchRecipeDetail = () => { } } = this.props;
-        fetchRecipeDetail(_id);
+        await fetchRecipeDetail(_id);
+        this.setState({ refreshing: false });
     }
 
     async componentDidMount() {
         this.props.navigation.addListener('focus', () => {
+            this.refs?._mainScrollView?.scrollTo({ x: 0, y: 0, animated: true });
             this.fetchRecipeDetailAPI()
         });
     }
@@ -51,7 +55,7 @@ class PresetDetail extends Component {
             iso,
             exposure,
             sensors = [],
-            cameras =[]
+            cameras = []
         } = recipeDetail;
 
         return (
@@ -176,11 +180,23 @@ class PresetDetail extends Component {
         )
     }
 
+    _onRefresh = () => {
+        this.setState({ refreshing: true });
+        this.fetchRecipeDetailAPI()
+    }
+
     renderPage = () => {
+        const { refreshing } = this.state;
+        const { recipeDetail = {} } = this.props;
         const windowWidth = Dimensions.get('window').width;
         const windowHeight = Dimensions.get('window').height;
         return (
-            <ScrollView className={styles.PresetDetail}>
+            <ScrollView ref='_mainScrollView' refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={this._onRefresh}
+                />
+            } className={styles.PresetDetail}>
                 <Text style={styles.partTitle}>SAMPLE IMAGES</Text>
                 <View style={styles.sliderBox}>
                     <SliderBox
@@ -191,19 +207,20 @@ class PresetDetail extends Component {
                     />
                 </View>
                 <Text style={styles.partTitle}>RECIPES</Text>
-                {this.renderInfomation()}
+                {Object.keys(recipeDetail).length !== 0 && this.renderInfomation()}
             </ScrollView>
         )
     }
     render() {
-        const { recipeDetail: { name = '' } = {} } = this.props;
+        const { route } = this.props;
+        const { params: { name = '' } = {} } = route;
         return (<MainLayout title={name} children={this.renderPage()} />)
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        recipeDetail: state.recipeReducer.recipeDetail
+        recipeDetail: state.recipeReducer.recipeDetail,
     }
 }
 const mapDispatchToProps = (dispatch) => {

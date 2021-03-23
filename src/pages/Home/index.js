@@ -38,10 +38,9 @@ class Home extends Component {
 
     async componentDidMount() {
         const { clearRecipeDetail = () => { } } = this.props;
-      
         this.props.navigation.addListener('focus', () => {
-            this.fetchDataAPI()
             clearRecipeDetail()
+            this.fetchDataAPI()
         });
     }
 
@@ -50,9 +49,9 @@ class Home extends Component {
         const { name = '', _id = 0, img = '' } = item;
         return (
             <View style={styles.eachRow}>
-                <TouchableOpacity key={_id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { _id })}>
+                <TouchableOpacity key={_id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { _id, name })}>
                     <View style={styles.leftPart}>
-                        <Text style={styles.indexNumber}>{index}</Text>
+                        <Text style={styles.indexNumber}>{index + 1}</Text>
                         <Text style={styles.presetName}>{name}</Text>
                     </View>
                     {/* <View style={styles.rightPart}> */}

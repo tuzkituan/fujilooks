@@ -1,7 +1,7 @@
 // Initial State
 const initialState = {
     recipeList: [],
-    recipeDetail: {}
+    recipeDetail: {},
 };
 
 const recipeReducer = (state = initialState, action) => {

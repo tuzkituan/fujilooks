@@ -36,7 +36,7 @@ export function* watchFetchRecipeList() {
       const response = yield call(fetchRecipeDetailFn, { id: action.payload._id });
       yield put({ 
         type: 'FETCH_RECIPE_DETAIL_ASYNC',
-        recipeDetail: response?.recipe || {}
+        recipeDetail: response?.recipe || {},
       });
     }
     catch (error) {
