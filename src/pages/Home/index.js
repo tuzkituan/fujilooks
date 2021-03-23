@@ -16,20 +16,36 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isFetching: false,
         }
     }
 
-    componentDidMount = () => {
+    fetchDataAPI = () => {
         const { fetchRecipeList = () => { } } = this.props;
         fetchRecipeList();
+        this.setState({ isFetching: false })
+    }
+
+    onRefresh() {
+        this.setState(
+            {
+                isFetching: true
+            },
+            () => {
+                this.fetchDataAPI()
+            });
+    }
+
+    componentDidMount = () => {
+        this.fetchDataAPI()
     }
 
     renderItem = ({ index, item }) => {
         const { navigation } = this.props;
-        const { name = '', id = 0, img = '' } = item;
+        const { name = '', _id = 0, img = '' } = item;
         return (
             <View style={styles.eachRow}>
-                <TouchableOpacity key={id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { id, name })}>
+                <TouchableOpacity key={_id} style={styles.presetView} onPress={() => navigation.navigate('Preset Details', { _id })}>
                     <View style={styles.leftPart}>
                         <Text style={styles.indexNumber}>{index}</Text>
                         <Text style={styles.presetName}>{name}</Text>
@@ -42,79 +58,31 @@ class Home extends Component {
         )
     }
 
-    renderPage = () => {
+    formatRecipeList = () => {
         const { recipeList = [] } = this.props;
+        return recipeList.map(recipe => {
+            const { _id = '', name = '' } = recipe;
+            return {
+                _id,
+                name,
+                img: Image1
+            }
+        })
+    }
 
-        console.log('recipeList', recipeList);
-        const mockData = [
-            {
-                id: 1,
-                name: 'Kodak Portra 400',
-                img: Image1,
-            },
-            {
-                id: 2,
-                name: 'Portra 400',
-                img: Image2,
-            },
-            {
-                id: 3,
-                name: 'Kodak 400',
-                img: Image3,
-            },
-            {
-                id: 4,
-                name: 'Kodak Portra 8000',
-                img: Image1,
-            },
-            {
-                id: 5,
-                name: 'Kodak Portra 400',
-                img: Image3,
-            },
-            {
-                id: 6,
-                name: 'Portra 400',
-                img: Image2,
-            },
-            {
-                id: 7,
-                name: 'Kodak 400',
-                img: Image1,
-            },
-            {
-                id: 8,
-                name: 'Kodak Portra 8000',
-                img: Image3,
-            },
-            {
-                id: 9,
-                name: 'Kodak Portra 400',
-                img: Image2,
-            },
-            {
-                id: 10,
-                name: 'Portra 400',
-                img: Image3,
-            },
-            {
-                id: 11,
-                name: 'Kodak 400',
-                img: Image3,
-            },
-            {
-                id: 12,
-                name: 'Kodak Portra 8000',
-                img: Image1,
-            },
-        ]
+    renderPage = () => {
+        const formatRecipeList = this.formatRecipeList();
+        const { isFetching } = this.state;
+
         return (
             <View style={styles.Home}>
                 <FilterBar />
                 <FlatList
-                    data={mockData}
+                    data={formatRecipeList}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item.id.toString()}
+                    onRefresh={() => this.onRefresh()}
+                    refreshing={isFetching}
+                    keyExtractor={item => item?._id.toString()}
                     style={styles.presetList}
                 />
             </View>

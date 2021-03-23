@@ -8,9 +8,26 @@ import Image1 from '../../assets/1.jpg';
 import Image2 from '../../assets/2.jpg';
 import Image3 from '../../assets/3.jpg';
 
-import styles from './index.scss';
+import { connect } from 'react-redux';
 
-export default class PresetDetail extends Component {
+import styles from './index.scss';
+class PresetDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+    fetchRecipeDetailAPI = () => {
+        const { route } = this.props;
+        const { params: { _id = '' } = {} } = route;
+        const { fetchRecipeDetail = () => { } } = this.props;
+        fetchRecipeDetail(_id);
+    }
+
+    componentDidMount = () => {
+        this.fetchRecipeDetailAPI()
+    }
+
     renderInfomation = () => {
         const mockData = {
             filmSimulation: 'PRO Neg. Std',
@@ -160,8 +177,6 @@ export default class PresetDetail extends Component {
     }
 
     renderPage = () => {
-        const { route } = this.props;
-        const { params: { id = 0 } = {} } = route;
         const windowWidth = Dimensions.get('window').width;
         const windowHeight = Dimensions.get('window').height;
         return (
@@ -181,8 +196,25 @@ export default class PresetDetail extends Component {
         )
     }
     render() {
-        const { route } = this.props;
-        const { params: { name = '' } = {} } = route;
+        const { recipeDetail: { name = '' } = {} } = this.props;
         return (<MainLayout title={name} children={this.renderPage()} />)
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        recipeDetail: state.recipeReducer.recipeDetail
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchRecipeDetail: (_id) => dispatch({
+            type: 'FETCH_RECIPE_DETAIL',
+            payload: {
+                _id
+            }
+        }),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PresetDetail);

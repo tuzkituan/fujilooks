@@ -1,6 +1,7 @@
 // Initial State
 const initialState = {
-    recipeList: {},
+    recipeList: [],
+    recipeDetail: {}
 };
 
 const recipeReducer = (state = initialState, action) => {
@@ -9,6 +10,12 @@ const recipeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 recipeList: action.recipeList,
+            };
+        }
+        case 'FETCH_RECIPE_DETAIL_ASYNC': {
+            return {
+                ...state,
+                recipeDetail: action.recipeDetail,
             };
         }
         default: {
